@@ -1,0 +1,36 @@
+-modifica titulo laravel para probar
+
+-agrega una ruta para probar
+Route::get('/welcome', function () {
+    return view('welcome');
+});
+
+-para retornar cadena
+Route::get('/', function () {
+    return 'welcome';
+});
+
+-para retornar array json
+Route::get('/', function () {
+    return ['foo' => 'bar'];
+});
+
+-crear clase test.blade.php
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Document</title>
+    </head>
+    
+    <body>
+        <h1> Test complete!</h1>
+    </body>
+</html>
+
+-retornar clase test  http://laravel6.test/test
+Route::get('test', function(){
+    return view('test');
+});

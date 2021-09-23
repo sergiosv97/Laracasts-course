@@ -1,0 +1,33 @@
+-crear layout.blade.php dentro de carpeta resources
+
+-copiar todo el contenido de welcome blade a esta ultima
+
+-cortar lo que esta dentro del body
+
+-pegar a welcome blade(vacio)
+
+-agregar @extends('layout') a welcome blade
+
+-agregar body abajo de todo en layout blade
+<body>
+        @yield ('content')
+</body>
+
+-en welcome blade cortar el div y agregarlo dentro de un @section   @endsection
+
+-mover layout.blade.php junto a welcome blade
+
+-crear ruta para contact
+Route::get('/contact', function () {
+    return view('contact');
+});
+
+http://laravel6.test/contact
+
+-crear contact.blade.php
+agregar 
+@extends('layout')
+
+@section('content')
+    <h1>hello world</h1>
+@endsection 

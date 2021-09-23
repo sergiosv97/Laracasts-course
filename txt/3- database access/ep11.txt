@@ -1,0 +1,45 @@
+-borrar bd posts
+
+-poner en terminal php artisan make:migration create_posts_table para crear tabla
+
+-agregar campos requeridos para bd en create_posts_table
+public function up()
+    {
+        Schema::create('posts', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('slug');
+            $table->text('body');
+            $table->timestamps();
+            $table->timestamp('published_at')->nullable;
+        });
+    }
+
+-php artisan migrate --migrar cambios a bd
+
+-refrescar bd y ver los cambios
+
+-------
+-crear otra migracion
+php artisan make:migration add_title_to_posts_table
+
+agregar $table->string('title'); en el up
+
+agregar $table->dropColumn('title'); en el down
+
+
+-php artisan migrate --migrar cambios a bd
+
+revisar tabla posts que haya agregado campo title
+
+-deshacer ultimo migrate
+php artisan migrate:rollback
+
+-borrar migracion add_title
+
+-agregar title como campo en create_posts_table
+$table->string('title');
+
+-hacer migration, no encuentra entonces hacer rollback
+y luego migration nuevamente y ahi si permite 
+
+-php artisan migrate:fresh

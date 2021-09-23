@@ -1,0 +1,95 @@
+-crear clase post.blade.php
+
+Route::get('/posts/{post}', function(){
+    return view('post');
+});  con esto devolves cualquier cosa que pases en la url
+
+http://laravel6.test/posts/1asdsadasd
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Document</title>
+    </head>
+    
+    <body>
+        <h1>Hola mundo</h1>
+    </body>
+</html>
+
+------------------
+-para que muestre lo que se pone en la url
+Route::get('/posts/{post}', function($post){
+    return ($post);
+});
+
+http://laravel6.test/posts/123
+
+-------------------
+
+-mostrar post segun elijas en la url
+Route::get('/posts/{post}', function($post){
+   $posts = [
+       'my-first-post' => 'hello, this is my first blog post!',
+       'my-second-post' => 'now im getting the hang of this bloggin thing.'
+   ];
+   
+   return view('post',[
+       'post' => $posts[$post]
+   ]);
+});
+
+http://laravel6.test/posts/my-first-post
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Document</title>
+    </head>
+    
+    <body>
+        <h1>My blog post</h1>
+
+        <p>{{$post}}</p>
+    </body>
+</html>
+
+----
+para que si le pasas un parametro que no exista, te diga que no hay nada
+Route::get('/posts/{post}', function($post){
+   $posts = [
+       'my-first-post' => 'hello, this is my first blog post!',
+       'my-second-post' => 'now im getting the hang of this bloggin thing.'
+   ];
+   
+   return view('post',[
+       'post' => $posts[$post] ?? 'nothing here yet'
+   ]);
+});
+
+---------------
+para que tire un 404 si no existe el parametro solicitado 
+http://laravel6.test/posts/my-2-post
+
+Route::get('/posts/{post}', function($post){
+   $posts = [
+       'my-first-post' => 'hello, this is my first blog post!',
+       'my-second-post' => 'now im getting the hang of this bloggin thing.'
+   ];
+
+   if (! array_key_exists($post, $posts)){
+       abort(404, 'sorry, that post was not found');
+   }
+   
+   return view('post',[
+       'post' => $posts[$post] ?? 'nothing here yet'
+   ]);
+});
+
+

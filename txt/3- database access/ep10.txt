@@ -1,0 +1,117 @@
+-agregar captura de error y use DB
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use DB;
+
+class PostsController extends Controller
+{
+    public function show($slug)
+    {
+            $post = DB::table('posts')->where('slug',$slug)->first();
+
+            //capturar error si no existe el post
+            if (!$post){
+                abort(404);
+            } 
+
+            return view('post',[
+                'post' => $post
+            ]);
+
+    }
+}
+
+---------
+crear modelo Post
+
+php artisan make:model Post
+
+agregar ruta use App\Post; al controllerposts
+
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use DB;
+use App\Post;
+
+class PostsController extends Controller
+{
+    public function show($slug)
+    {
+            //$post = DB::table('posts')->where('slug',$slug)->first();
+            $post = Post::where('slug',$slug)->first(); //igual que el anterior pero mas limpio
+
+            //capturar error si no existe el post
+            if (!$post){
+                abort(404);
+            } 
+
+            return view('post',[
+                'post' => $post
+            ]);
+
+    }
+}
+
+---- se agrega findorfail para hacer en lugar del if
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use DB;
+use App\Post;
+
+class PostsController extends Controller
+{
+    public function show($slug)
+    {
+            //$post = DB::table('posts')->where('slug',$slug)->first();
+            $post = Post::where('slug',$slug)->firstOrFail(); //igual que el anterior pero mas limpio
+
+            //capturar error si no existe el post
+            //if (!$post){
+            //    abort(404);
+           // } 
+
+            return view('post',[
+                'post' => $post
+            ]);
+
+    }
+}
+
+--------- esto hizo al final del video, continuar
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use DB;
+use App\Post;
+
+class PostsController extends Controller
+{
+    public function show($slug)
+    {
+            //$post = DB::table('posts')->where('slug',$slug)->first();
+            $post = Post::where('slug',$slug)->firstOrFail(); //igual que el anterior pero mas limpio
+
+            //capturar error si no existe el post
+            //if (!$post){
+            //    abort(404);
+           // } 
+
+           // return view('post',[
+           //     'post' => $post
+          //  ]);
+
+    }
+}
+
+http://laravel6.test/posts/my-first-post

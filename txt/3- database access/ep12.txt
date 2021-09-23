@@ -1,0 +1,5 @@
+crear multiples arvhivos con un comando
+
+php artisan make:model Project -mc
+
+migrations, controller, model

@@ -1,0 +1,80 @@
+Route::get('/posts/{post}','PostController@show');
+
+error porque necesito crear controller
+
+-se crea PostController.php
+
+<?php
+
+namespace App\Http\Controllers;
+
+
+
+class PostsController
+{
+    public function show()
+    {
+        return 'hello';
+    }
+}
+
+-------- se agrega esto que estaba en ruta anteriormente, y se adapta
+
+<?php
+
+namespace App\Http\Controllers;
+
+
+
+class PostsController
+{
+    public function show($post)
+    {
+            $posts = [
+                'my-first-post' => 'hello, this is my first blog post!',
+                'my-second-post' => 'now im getting the hang of this bloggin thing.'
+            ];
+         
+            if (! array_key_exists($post, $posts)){
+                abort(404, 'sorry, that post was not found');
+            }
+            
+            return view('post',[
+                'post' => $posts[$post] ?? 'nothing here yet'
+            ]);
+
+    }
+}
+
+http://laravel6.test/posts/my-second-post url
+
+-- borrar clase posts controller, para crearlo con comando php artisan y pegar la anterior funcion ahi
+
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class PostsController extends Controller
+{
+    public function show($post)
+    {
+            $posts = [
+                'my-first-post' => 'hello, this is my first blog post!',
+                'my-second-post' => 'now im getting the hang of this bloggin thing.'
+            ];
+         
+            if (! array_key_exists($post, $posts)){
+                abort(404, 'sorry, that post was not found');
+            }
+            
+            return view('post',[
+                'post' => $posts[$post] ?? 'nothing here yet'
+            ]);
+
+    }
+}
+
+
+

@@ -1,0 +1,88 @@
+-editar nombre de bd en .env
+
+-mysql -u root en terminal
+
+create database laravel6;
+
+crear tablas id, slug, body
+
+insertar datos
+INSERT INTO posts (slug, body)
+VALUES ("my-first-post", "this is my firs post! wow");
+
+---
+-editar post controller
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class PostsController extends Controller
+{
+    public function show($slug)
+    {
+            $post = \DB::table('posts')->where('slug',$slug)->first();
+            dd($post);
+            //$posts = [
+              //  'my-first-post' => 'hello, this is my first blog post!',
+              //  'my-second-post' => 'now im getting the hang of this bloggin thing.'
+            //];
+         
+            if (! array_key_exists($post, $posts)){
+                abort(404, 'sorry, that post was not found');
+            }
+            
+            return view('post',[
+                'post' => $posts[$post] ?? 'nothing here yet'
+            ]);
+
+    }
+}
+
+Route::get('/posts/{post}','PostsController@show');
+http://laravel6.test/posts/my-first-post
+
+
+--------------
+
+editar post controller
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class PostsController extends Controller
+{
+    public function show($slug)
+    {
+            $post = \DB::table('posts')->where('slug',$slug)->first();
+
+            return view('post',[
+                'post' => $post
+            ]);
+
+    }
+}
+editar post blade, agregar ->body al lado de post para traer lo que hay en el campo slug de la tabla post en bd
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Document</title>
+    </head>
+    
+    <body>
+        <h1>My blog post</h1>
+
+        <p>{{$post->body}}</p>
+    </body>
+</html>
+
+http://laravel6.test/posts/my-first-post
+Route::get('/posts/{post}','PostsController@show');
+
+

@@ -1,0 +1,47 @@
+-para retornar nombre
+
+Route::get('/', function(){
+    $name = request('name');
+
+    return $name;
+    //return view('test');
+});
+
+http://laravel6.test/?name=sergio en la url
+
+- retornar nombre con variable
+
+Route::get('/', function(){
+    $name = request('name');
+
+    return view('test', [
+        'name' => $name
+    ]);
+});
+
+<body>
+        <h1><?= $name; ?></h1>  en test blade
+</body>
+
+http://laravel6.test/?name=sergio
+
+
+-alerta emergente en pantalla
+http://laravel6.test/?name=<script>alert('hello')</script>
+
+-htmlspecialchars — Convierte caracteres especiales en entidades HTML
+<body>
+     <h1><?= htmlspecialchars($name, ENT_QUOTES)  ?></h1>
+</body>
+
+-otra forma de alerta
+
+Route::get('/', function(){
+    return view('test', [
+        'name' => request('name')
+    ]);
+});
+
+<body>
+        <h1>{!! $name !!}</h1>
+</body>
