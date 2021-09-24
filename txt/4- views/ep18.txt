@@ -1,0 +1,53 @@
+-crear modelo Article
+php artisan make:model Article -m
+
+-agregar los campos para bd en articles table
+ public function up()
+    {
+        Schema::create('articles', function (Blueprint $table) {
+            $table->string('title');
+            $table->text('excerpt');
+            $table->text('body');
+            $table->timestamps();
+        });
+    }
+-migrar cambios a bd
+
+-php artisan tinker
+
+$article = new App\Article;
+
+$article->title = 'Getting to know us';
+
+$article->excerpt = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
+
+$article->body='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
+
+$article->save();
+
+revisar cambios en la bd
+
+-editar ruta about
+Route::get('/about', function () {
+    return view('about', [
+        'articles' => App\Article::latest()->get()
+    ]);
+});
+
+-modificar about blade 
+
+<ul class="style1">
+  @foreach ($articles as $article )
+   <li class="first">
+	h3>{{$article->title}}</h3>
+	<p><a href="#">{{$article->excerpt}}</a></p>
+   </li>
+  @endforeach	
+</ul>
+
+-modificar de nuevo rutas, con esto traes los ultimos 3 valores
+Route::get('/about', function () {
+    return view('about', [
+        'articles' => App\Article::take(3)->latest()->get()
+    ]);
+});

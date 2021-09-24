@@ -1,0 +1,60 @@
+-editar fila en layout, donde dice career poner articles
+
+-crear nueva ruta
+Route::get('/articles/{article}', 'ArticlesController@show');
+
+-crear controller 
+php artisan make:controller ArticlesController
+
+-agregar una funcion para buscar por id en la clase controller
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Article;
+use Illuminate\Http\Request;
+
+class ArticlesController extends Controller
+{
+    public function show ($id)
+    {
+        $article = Article::find($id);
+
+        return view('articles.show',['article => $article ']);
+    }
+}
+
+-crear carpeta articles en views
+crear carpeta show adentro
+
+-copiar contenido de about blade en show
+
+-asi queda article 
+@extends('layout')
+
+
+@section('content')
+
+	
+<div id="wrapper">
+	<div 
+        id="page"
+        class="container"
+        >
+		<div id="content">
+			<div class="title">
+				<h2>{{$article->title}}</h2>
+            </div>
+
+			<p>
+                <img 
+                    src="/images/banner.jpg" 
+                    alt="" 
+                    class="image image-full"
+                    />
+            </p>
+            {{$article->body}}
+	</div>
+</div>
+
+@endsection

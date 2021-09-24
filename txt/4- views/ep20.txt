@@ -1,0 +1,46 @@
+-se crea una nueva ruta
+Route::get('articles','ArticlesController@index');
+
+-agregar una nueva funcion en controller
+public function index()
+    {
+        $articles = Article::latest()->get();
+
+        return view('articles.index',['articles' => $articles ]);
+    }
+
+-crear clase index
+@extends('layout')
+
+
+@section('content')
+
+	
+<div id="wrapper">
+	<div 
+        id="page"
+        class="container"
+        >
+        @foreach ($articles as $article)
+		<div id="content">
+			<div class="title">
+				<h2>
+                   <a href="/articles/{{$article->id}}">
+                    {{$article->title}}
+                </h2>
+            </div>
+
+			<p>
+                <img 
+                    src="data:image/jpeg;base64,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" 
+                    alt="" 
+                    />
+            </p>
+
+            {!!$article->excerpt!!}
+        </div>
+        @endforeach
+	</div>
+</div>
+
+@endsection

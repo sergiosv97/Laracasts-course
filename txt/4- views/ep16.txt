@@ -1,0 +1,5 @@
+-agregar / a los href de lin 17 y 21
+
+-editar class de lin 21 {{Request::path() === '/' ? 'current_page_item' : ''}}
+
+-copiar a los li de abajo

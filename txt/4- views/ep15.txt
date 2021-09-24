@@ -1,0 +1,30 @@
+-descargar template (en mi caso tuve que extraer html y css porque no habia la pag)
+
+-mover css al proyecto
+
+-crear layout blade y pegar html 
+
+-cortar contenido de welcome blade y crear extends layout
+
+-cortar el div de layout blade
+
+-crear yield content en el div
+
+-crear section content en welcome blade y pegar contenido del div ahi
+
+-crear ruta para about
+
+Route::get('/about', function () {
+    return view('about');
+});
+
+-crear about blade 
+
+-copiar todo el contenido de welcome a about
+borrar header wrapper
+
+-en welcome agregar la ruta /about en el href
+
+-cortar header featured de layout y pegar en welcome dentro de un section
+
+-agregar ruta about a layout

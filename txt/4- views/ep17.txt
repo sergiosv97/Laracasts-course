@@ -1,0 +1,37 @@
+-borrar contenido de welcome y dejar section header featured y copyright
+
+-borrar footer de about y de welcome, dejar solo en el layout
+
+-cortar section content de welcome
+
+-abrir app.scss
+
+agregar esto 
+
+$primary: red 
+
+body {
+    color: $primary;
+}
+
+-abrir webpack 
+comentar linea 14
+
+-ir a package json
+abrir terminal
+hacer npm install
+
+-npm run dev
+
+-cambiar de color rojo a green en app scss
+
+-hacer npm run dev
+
+-npm run watch
+
+-reeditar webpack min
+
+-npm run dev
+
+- agregar script en layout blade <script src="/js/app.js"></script>
+tambien un link <link rel="stylesheet" href="/css/app.css">
