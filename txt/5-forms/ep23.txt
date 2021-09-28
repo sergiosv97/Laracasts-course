@@ -1,0 +1,95 @@
+-crear ruta create
+Route::get('/articles/create', 'ArticlesController@create');
+
+-crear funcion create en articles controller
+public function create()
+    {
+        //shows a view to create a new resource
+        return view('articles.create');
+    
+    }
+
+-crear clase create en articles
+@extends('layout')
+
+@section('content')
+    <div id="wrapper">
+        <h1 class="heading has-text-weight-bold is-size-4">New article</h1>
+            <br>
+
+            <form action="">
+                <div class="field">
+                    <label class="label" for="title">Title</label>
+                
+                    <div class="control">
+                        <input class="input" type="text" name="title" id="title">
+                    </div>  
+                </div>      
+                
+                <div class="field">
+                    <label class="label" for="excerpt">Excerpt</label>
+                
+                    <div class="control">
+                        <textarea class="textarea" name="excerpt" id="excerpt"></textarea>
+                    </div>  
+                </div>    
+
+                <div class="field">
+                    <label class="label" for="body">Body</label>
+                
+                    <div class="control">
+                        <textarea class="textarea" name="body" id="body"></textarea>
+                    </div>  
+                </div>  
+
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button class="button is-link" type="submit">Submit</button>
+                    </div>  
+                </div>  
+                
+            </form>   
+        </div>     
+    </div> 
+    
+    <div id="">
+@endsection
+
+-agregar link en clase layout para darle formato al formulario
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css">
+
+-crear ruta post para publicar articulos
+Route::post('/articles', 'ArticlesController@store');
+
+-editar form en clase create
+<form method="POST" action="/articles">
+
+ocurre error 419 al intentar inserar form
+Se trata de que enviamos un formulario pero en lugar de que los datos se guarden, aparece un error 419 y dice “Page expired”. Podemos tener varios campos, pero dentro del formulario debe estar un input hidden con el token CSRF para prevenir ataques.
+
+-editar funcion store en articles controller para permitir post
+public function store()
+    {
+        //persist the new resource
+        //dump(request()->all());
+
+        $article = new Article();
+
+        $article->title =request('title');
+        $article->excerpt =request('excerpt');
+        $article->body =request('body');
+
+        $article->save();
+
+        return redirect('/articles');
+    
+    }
+
+-cortar estilo y hacer para que aplique a uno solo, no a todos
+crear yield head en layout
+
+-crear section head en create blade y pegar estilo
+@section('head')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css">    
+@endsection

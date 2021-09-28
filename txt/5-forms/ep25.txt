@@ -1,0 +1,56 @@
+-editar funcion store para hacer validaciones en el form
+public function store()
+    {
+        request()->validate([
+            'title' => 'required',
+            'excerpt' => 'required',
+            'body'  => 'required',
+        ]);
+        //persist the new resource
+        //dump(request()->all());
+
+        //validation 
+
+        //clean up
+        $article = new Article();
+        $article->title =request('title');
+        $article->excerpt =request('excerpt');
+        $article->body =request('body');
+        $article->save();
+
+        return redirect('/articles');
+    
+    }
+
+-agregar alertas de campos obligatorios en create para title, excerpt y body
+<div class="control">
+                        <input class="input @error('title') is-danger @enderror" type="text" name="title" id="title">
+
+                        @error('title')
+                            <p class="help is-danger">{{ $errors->first('title')}}</p>
+                        @enderror  
+</div>  
+
+-hacer que texto ingresado de input se mantenga aunque los otros esten mal
+
+<input class="input @error('title') is-danger @enderror" type="text" name="title" id="title" value="{{old ('title')}}">
+
+-editar function public para que recargue la pagina en caso de no mandar todos los campos en update
+public function update($id)
+    {
+        request()->validate([
+            'title' => 'required',
+            'excerpt' => 'required',
+            'body'  => 'required',
+        ]);
+        
+        $article = Article::find($id);
+        //show a view to edit an existing resource
+        //find the article associated with the id
+        $article->title =request('title');
+        $article->excerpt =request('excerpt');
+        $article->body =request('body');
+        $article->save();
+
+        return redirect('/articles/' . $article->id);
+    }

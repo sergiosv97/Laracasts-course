@@ -1,0 +1,34 @@
+-editar ruta show
+Route::get('/articles/{article}', 'ArticlesController@show')->name('articles.show');
+
+-editar index
+<a href="{{ route('articles.show',$article)}}">
+                    {{$article->title}}
+                   </a>
+
+-editar funcion update
+return redirect(route('articles.show', $article));
+
+-editar ruta index
+Route::get('articles','ArticlesController@index')->name('articles.index'); 
+
+-editar funcion store
+return redirect(route('articles.index'));
+
+-crear function dentro del modelo
+public function path()
+    {
+        return route('articles.show', $this);
+    }
+
+-php artisan tinker
+$article = App\Article::first();
+$article->path();
+
+-editar de nuevo index
+<a href="{{ $article->path()}}">
+                    {{$article->title}}
+</a>
+
+-editar update 
+return redirect($article->path());

@@ -1,0 +1,44 @@
+-crear ruta para hacer edit
+Route::get('/articles/{article}/edit', 'ArticlesController@edit');
+
+-crear funcion edit
+
+    public function edit()
+    {
+        //show a view to edit an existing resource
+        return view('articles.edit');
+    
+    }
+
+-crear clase edit blade php
+
+-copiar contenido dentro del section de create a edit
+
+-editar funcion edit para poder editar articulo segun id
+   public function edit($id)
+    {
+        $article = Article::find($id);
+        //show a view to edit an existing resource
+        //find the article associated with the id
+        return view('articles.edit', compact('article'));
+    
+    }
+
+-crar funcion update
+public function update($id)
+    {
+        $article = Article::find($id);
+        //show a view to edit an existing resource
+        //find the article associated with the id
+        $article->title =request('title');
+        $article->excerpt =request('excerpt');
+        $article->body =request('body');
+        $article->save();
+
+        return redirect('/articles/' . $article->id);
+    }
+
+-actualizar al inicio de form
+<form method="POST" action="/articles/{{$article->id}}">
+            @csrf
+            @method('PUT')

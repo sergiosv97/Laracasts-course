@@ -1,0 +1,37 @@
+-editar function show del controller
+ public function show(Article $article)
+    {
+        //show a single resource
+        //$article = Article::findOrFail($id);
+
+        return view('articles.show',['article' => $article ]);
+    }
+
+-editar function edit, update
+public function edit(Article $article)
+    {
+        //$article = Article::find($id);
+        //show a view to edit an existing resource
+        //find the article associated with the id
+        return view('articles.edit', compact('article'));
+    
+    }
+
+    public function update(Article $article)
+    {
+        request()->validate([
+            'title' => 'required',
+            'excerpt' => 'required',
+            'body'  => 'required',
+        ]);
+        
+        //$article = Article::find($id);
+        //show a view to edit an existing resource
+        //find the article associated with the id
+        $article->title =request('title');
+        $article->excerpt =request('excerpt');
+        $article->body =request('body');
+        $article->save();
+
+        return redirect('/articles/' . $article->id);
+    }

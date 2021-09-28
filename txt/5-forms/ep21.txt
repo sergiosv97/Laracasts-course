@@ -1,0 +1,44 @@
+-crear 5 funciones en articles controller
+create,store, edit, update, destroy
+
+public function create()
+    {
+        //shows a view to create a new resource
+    
+    }
+
+    public function store()
+    {
+        //persist the new resource
+    
+    }
+
+    public function edit()
+    {
+        //show a view to edit an existing resource
+    
+    }
+
+    public function update()
+    {
+        //persist the edited resource
+    
+    }
+
+    public function destroy()
+    {
+        //delete the resource
+    
+    }
+
+-crear nuevo controller
+php artisan make:controller ProjectsController -r
+
+-borrar el controller nuevo
+
+-crear de nuevo y que incluya modelo
+php artisan make:controller ProjectsController -r -m Project
+
+-agregar dos rutas edit y update
+Route::get('/articles/{article}/edit', 'ArticlesController@edit');
+Route::get('/articles/{article}', 'ArticlesController@update');

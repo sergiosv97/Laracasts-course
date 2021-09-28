@@ -1,0 +1,84 @@
+-editar funcion store
+public function store()
+    {
+        request()->validate([
+            'title' => 'required',
+            'excerpt' => 'required',
+            'body'  => 'required'
+        ]);
+        //persist the new resource
+        //dump(request()->all());
+
+        //validation 
+
+        //clean up
+
+        Article::create([
+            'title' => request('required'),
+            'excerpt' => request('required'),
+            'body'  => request('required')
+        ]);
+
+        return redirect('/articles');
+    
+    }
+
+-editar model article
+
+
+-editar store de nuevo
+public function store()
+    {
+        Article::create(request()->validate([
+            'title' => 'required',
+            'excerpt' => 'required',
+            'body'  => 'required'
+        ]));
+        //persist the new resource
+        //dump(request()->all());
+
+        //validation 
+
+        //clean up
+        return redirect('/articles');
+    
+    }
+
+-editar update 
+  public function update(Article $article)
+    {
+        $article->update(request()->validate([
+            'title' => 'required',
+            'excerpt' => 'required',
+            'body'  => 'required'
+        ]));
+        
+        //$article = Article::find($id);
+        //show a view to edit an existing resource
+        //find the article associated with the id
+        return redirect('/articles/' . $article->id);
+    }
+-crear metodo validateArticle sobre store
+public function store()
+    {
+        Article::create($this->validateArticle());
+        //persist the new resource
+        //dump(request()->all());
+
+        //validation 
+
+        //clean up
+        return redirect('/articles');
+    
+    }
+
+-editar update
+public function update(Article $article)
+    {
+        $article->update($this->validateArticle());
+        
+        //$article = Article::find($id);
+        //show a view to edit an existing resource
+        //find the article associated with the id
+        return redirect('/articles/' . $article->id);
+    }

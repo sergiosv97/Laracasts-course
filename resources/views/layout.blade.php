@@ -11,6 +11,8 @@
 <link href="/css/estilos.css"  rel="stylesheet" >
 <link rel="stylesheet" href="/css/app.css">
 
+@yield('head')
+
 </head>
 <body>
 	<div id="header" class="container">
