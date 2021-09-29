@@ -1,0 +1,80 @@
+-copiar clase control de create 
+<div class="field">
+                    <label class="label" for="body">Body</label>
+                
+                    <div class="control">
+                        <textarea class="textarea @error('body') is-danger @enderror" name="body" id="body" value="{{old ('body')}}></textarea>
+                        @error('body')
+                            <p class="help is-danger">{{ $errors->first('body')}}</p>
+                        @enderror  
+                    </div>  
+                </div> 
+
+
+pegar abajo
+<div class="field">
+                    <label class="label" for="body">Tags</label>
+                
+                    <div class="control">
+                        <select 
+                            name="tags[]"
+                        >
+                          @foreach ($tags as $tag)
+                            <option value="{{$tag->id}}">{{$tag->name}}</option>
+                          @endforeach
+                        </select>    
+
+                        @error('tags')
+                            <p class="help is-danger">{{ $message}}</p>
+                        @enderror  
+                    </div>  
+                </div>  
+
+-editar function create para mostrar los tags
+public function create()
+    {
+        //shows a view to create a new resource
+
+        return view('articles.create',[
+            'tags'=> Tag::all()
+        ]);
+    
+    }
+-editar funtion store 
+public function store()
+    {
+        //dd(request()->all());
+        $article = new Article ($this-> validateArticle());
+        $article-> user_id = 1; 
+        $article-> save();
+
+        $articles ->tags()-> attach( request( tags ));
+        
+        //persist the new resource
+        return redirect(route('articles.index'));
+    
+    }
+
+php artisan tinker
+App\Article::find(1);
+$article = App\Article::find(1);
+$article->tags()->attach(1);
+$article->tags()->detach(1);
+$tag = App\Tag::find(1)
+$article->tags()->attach($tag);
+
+-edit store
+public function store()
+    {
+        $this->validateArticle();
+        //dd(request()->all());
+        $article = new Article(request(['title','excerpt','body']));
+        $article->user_id = 1; 
+        $article->save();
+
+        $article->tags()->attach(request('tags'));
+        
+        //persist the new resource
+        return redirect(route('articles.index'));
+    
+    }

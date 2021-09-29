@@ -1,0 +1,23 @@
+-crear funcion articles en user
+public function articles()
+    {
+        return $this->hasMany(Article::class);
+    }
+
+-crear function user en article
+public function user()
+    {
+        
+    }
+
+-crear funcion projects en user
+public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
+
+-crear function user en project
+public function user()
+    {
+        return $this->belongsTo(User::class);
+    }

@@ -1,0 +1,20 @@
+-agregar un parrafo con foreach dentro para tag
+<p style="margin-top: 1em">
+                @foreach ($article->tags as $tag)
+                    <a href="/articles?tag={{$tag->name}}">{{$tag->name}}</a>
+                @endforeach
+            </p>
+
+-agregar un if en function index de articles controller
+if (request('tag')) {
+            $articles = Tag::where('name',request('tag'))->firstOrFail()->articles;
+        }else {
+            $articles = Article::latest()->get();
+        }
+-editar index blade
+cambiar foreach por forelse
+agregar un @empty
+p que diga no relevant articles yet
+
+
+ocultar algunos elementos desde blade

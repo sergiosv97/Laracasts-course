@@ -1,0 +1,102 @@
+-agregar nuevo campo para fk en create_articles_table
+public function up()
+    {
+        Schema::create('articles', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id');
+            $table->string('title');
+            $table->text('excerpt');
+            $table->text('body');
+            $table->timestamps();
+        });
+    }
+
+-php artisan migrate:fresh y ver que se haya agregado columna user_id en articles en la bd
+
+-php artisan tinker
+
+-factory (App\User::class)->create(); crear usuario fake
+
+-para crear varios usuarios
+factory (App\User::class, 5)->create();
+
+-si se prueba esto por otra tabla pero que no tenga su clase factory en el proyecto, no funciona, por lo tanto crear
+php artisan make:factory ArticleFactory
+
+-borrar factory creado
+
+-crear nuevo
+php artisan make:factory ArticleFactory -m "App\Article"
+
+-editar function 
+$factory->define(Article::class, function (Faker $faker) {
+    return [
+        'user_id' => factory(\App\User::class),
+        'title' => $faker->sentence,
+        'excerpt' => $faker->sentence,
+        'body' => $faker->paragraph
+    ];
+});
+
+- php artisan tinker
+factory (App\Article::class, 5)->create();
+
+-cargar 5 veces un mismo dato
+(App\Article::class, 5)->create(['title' => 'Override the title']);
+
+-borrar users del 13 al 17
+
+-crear 5 articulos asociados a un mismo usuario
+>>> factory (App\Article::class, 5)->create(['user_id' => 1]);
+
+-borrar usuario al que se le asigno los articulos
+
+-borrar articulos
+
+-ir a create_articles y agregar parametro de foreign, para que al borrar un user se eliminen sus articulos con el
+public function up()
+    {
+        Schema::create('articles', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id');
+            $table->string('title');
+            $table->text('excerpt');
+            $table->text('body');
+            $table->timestamps();
+
+            $table->foreign('user_id')
+            ->references('id')
+            ->on('users')
+            ->onDelete('cascade');
+        });
+    }
+
+-php artisan migrate:fresh
+
+-crear dos articulos
+ factory (App\Article::class, 2)->create();
+
+-crear 5 articulos y asignar al user id 1
+factory (App\Article::class, 5)->create(['user_id' => 1]);
+
+-borrar un user y se debera borrar junto con sus articulos pertenecientes
+
+-buscar usuario por id 
+>>> App\User::find(1);
+
+-editar function user en article.php
+public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+-buscar ususario del articulo especificado segun id de articulo
+App\Article::find(1)->user;
+
+-renombrar function user por author
+public function author()
+    {
+        return $this->belongsTo(User::class, 'user_id'); //user_id
+    }
+
+-App\Article::find(1)->author;

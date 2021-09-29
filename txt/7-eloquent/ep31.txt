@@ -1,0 +1,64 @@
+-crear function tags en article.php
+public function tags()
+    {
+       return $this->belongsToMany(Tag::class);
+    }
+
+-crear modelo Tag
+php artisan make:model Tag -m
+
+-editar clase create_tags_table
+ public function up()
+    {
+        Schema::create('tags', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->timestamps();
+        });
+
+        Schema::create('article_tag', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('article_id');
+            $table->unsignedBigInteger('tag_id');
+            $table->timestamps();
+
+            $table->unique(['article_id','tag_id']);
+
+            $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
+            $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
+        });
+
+-php artisan migrate
+
+--editar title de tabla articles, llamarle learn laravel
+
+-agregar 4 tags: laravel, php, education, personal
+
+-crear 3 articles tag, article_id 1 para tag_id 1
+article_id 1 para tag_id 2
+article_id 1 para tag_id 3
+
+-php artisan tinker 
+$article = App\Article::first();
+
+-para traer los tags de articulos
+$article ->tags;
+
+-lo mismo que el anterior pero solo los nombres
+$article->tags->pluck('name');
+
+-copiar function tags de article a clase tag
+public function tags()
+    {
+       return $this->belongsToMany(Tag::class);
+    }
+
+-cambuar tag por article
+public function articles()
+    {
+       return $this->belongsToMany(Article::class);
+    }
+
+$tag = App\Tag::first();
+
+-para traer todos los articulos$tag->articles;
